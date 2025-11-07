@@ -1,48 +1,53 @@
-// 表示したいテキストを配列で管理
-const scenario = [
-    { name: "？？？", text: "……やっと起きた？" },
-    { name: "？？？", text: "ここは、あなたが来るはずの場所だったの。" },
-    { name: "？？？", text: "さあ、始めましょう。" }
-  ];
-  
-  let index = 0;       // 今の文章番号
-  let charIndex = 0;   // テキストの中の現在位置
-  let speed = 40;      // 文字速度（ms）
-  
-  const nameBox = document.getElementById("name");
-  const textBox = document.getElementById("text");
-  
-  // 文字を一文字ずつ表示
-  function typeWriter() {
-    let sentence = scenario[index].text;
-    if (charIndex < sentence.length) {
-      textBox.innerHTML += sentence.charAt(charIndex);
-      charIndex++;
-      setTimeout(typeWriter, speed);
-    }
+body {
+    margin: 0;
+    background: #000;
+    font-family: "Yu Gothic", sans-serif;
   }
   
-  // 次の文章へ
-  function next() {
-    if (charIndex < scenario[index].text.length) {
-      // 途中なら一気に全文表示
-      charIndex = scenario[index].text.length;
-      textBox.innerHTML = scenario[index].text;
-    } else {
-      // 次へ進む
-      index++;
-      if (index >= scenario.length) return;
-      nameBox.innerHTML = scenario[index].name;
-      textBox.innerHTML = "";
-      charIndex = 0;
-      typeWriter();
-    }
+  #game {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
   }
   
-  // 初期表示
-  nameBox.innerHTML = scenario[0].name;
-  typeWriter();
+  /* 背景 */
+  #bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   
-  // 画面タップで次へ
-  document.getElementById("game").addEventListener("click", next);
+  /* 立ち絵 */
+  #character {
+    position: absolute;
+    bottom: 15%;
+    left: 46%;
+    width: 60%;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+  
+  /* テキストウィンドウ */
+  #textbox {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.6);
+    padding: 18px;
+    color: #fff;
+    box-sizing: border-box;
+  }
+  
+  #name {
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 1.0rem;
+  }
+  
+  #text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
   
